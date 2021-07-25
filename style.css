@@ -1,0 +1,20 @@
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: Lato;
+    font-size: 13px;
+}
+
+.y.axis .tick line {
+    opacity: 0.1;
+}
+
+.chart {
+  max-width: 1140px;
+  margin: 50px auto;
+}
