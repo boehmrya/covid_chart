@@ -146,7 +146,6 @@ Interval = 14.4375
     var viewBox = "0 0 " + outerWidth + " " + outerHeight;
 
     var dataExtent = d3.extent(upstreamData, function(d) { return d.day; });
-    console.log(dataExtent);
 
     xScale = d3.scale.linear()
           .domain(d3.extent(upstreamData, function(d) { return d.day; }))
@@ -156,10 +155,14 @@ Interval = 14.4375
           .domain([0,60])
           .range([height, 0]);
 
-
     xAxis = d3.svg.axis()
               .scale(xScale)
-              .tickValues(dataLabels)
+              .tickValues(upstreamData.map(function(item){
+                return item.day;
+              }))
+              .tickFormat(function(d,i) {
+                return dataLabels[i];
+              })
               .orient("bottom");
 
     yAxis = d3.svg.axis()
