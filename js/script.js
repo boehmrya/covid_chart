@@ -203,19 +203,65 @@ Interval = 14.4375
             return yScale(d.growth);
         });
 
-    svg.append('path')
-        .attr('d', lineGen(upstreamData))
-        .attr('stroke', '#8c489a')
-        .attr('stroke-width', 2)
-        .attr("transform", "translate(" + margin.left + ",0)")
-        .attr('fill', 'none');
+        svg.append('path')
+            .attr("class","line")
+            .attr('d', lineGen(upstreamData))
+            .attr('stroke', '#8c489a')
+            .attr('stroke-width', 2)
+            .attr("transform", "translate(" + margin.left + ",0)")
+            .attr('fill', 'none');
 
-    svg.append('path')
-        .attr('d', lineGen(downstreamData))
-        .attr('stroke', '#e12053')
-        .attr('stroke-width', 2)
-        .attr("transform", "translate(" + margin.left + ",0)")
-        .attr('fill', 'none');
+        svg.append('path')
+            .attr("class","line")
+            .attr('d', lineGen(downstreamData))
+            .attr('stroke', '#e12053')
+            .attr('stroke-width', 2)
+            .attr("transform", "translate(" + margin.left + ",0)")
+            .attr('fill', 'none');
+
+        svg.selectAll(".dot-upstream")
+          .data(upstreamData)  // This is the nested data call
+          .enter()
+            .append("circle")
+            .attr("class", "dot-upstream")
+            .attr("cx", function(d) { return xScale(d.day) + margin.left; })
+            .attr("cy", function(d) { return yScale(d.growth); })
+            .attr("r", 4)
+            .attr("fill", "#8c489a");
+
+        svg.selectAll(".dot-downstream")
+          .data(downstreamData)  // This is the nested data call
+          .enter()
+            .append("circle")
+            .attr("class", "dot-downstream")
+            .attr("cx", function(d) { return xScale(d.day) + margin.left; })
+            .attr("cy", function(d) { return yScale(d.growth); })
+            .attr("r", 4)
+            .attr("fill", "#e12053");
+
+         //Select All of the lines and process them one by one
+         d3.selectAll(".line").each(function(d,i) {
+           d3.select(this).style("opacity","1");
+
+           // Get the length of each line in turn
+           var totalLength = d3.select(".line").node().getTotalLength();
+
+           d3.selectAll(".line")
+             .attr("stroke-dasharray", totalLength + " " + totalLength)
+               .attr("stroke-dashoffset", totalLength)
+               .transition()
+               .duration(2000)
+               .ease("ease-in") //Try linear, quad, bounce... see other examples here - http://bl.ocks.org/hunzy/9929724
+               .attr("stroke-dashoffset", 0)
+               .style("stroke-width", 3);
+         });
+
+         // reveal text
+         d3.selectAll(".dot-downstream, .dot-upstream")
+           .transition()
+           .delay(1000)
+           .duration(3000)
+           .style("opacity", 1);
 
     }
     InitChart();
