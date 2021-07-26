@@ -100,39 +100,39 @@ Interval = 14.4375
 
   var dataLabels = [
     '03-01-2020',
-    '03-28-2020',
-    '04-11-2020',
-    '04-25-2020',
-    '05-09-2020',
-    '05-23-2020',
-    '06-06-2020',
-    '06-20-2020',
-    '07-04-2020',
-    '07-18-2020',
-    '08-08-2020',
-    '08-22-2020',
-    '09-12-2020',
-    '09-26-2020',
-    '10-10-2020',
-    '10-24-2020',
-    '11-07-2020',
-    '11-21-2020',
-    '12-05-2020',
-    '12-19-2020',
+    '03-28',
+    '04-11',
+    '04-25',
+    '05-09',
+    '05-23',
+    '06-06',
+    '06-20',
+    '07-04',
+    '07-18',
+    '08-08',
+    '08-22',
+    '09-12',
+    '09-26',
+    '10-10',
+    '10-24',
+    '11-07',
+    '11-21',
+    '12-05',
+    '12-19',
     '01-02-2021',
-    '01-16-2021',
-    '01-30-2021',
-    '02-13-2021',
-    '02-27-2021',
-    '03-13-2021',
-    '03-27-2021',
-    '04-10-2021',
-    '04-24-2021',
-    '05-08-2021',
-    '05-22-2021',
-    '06-05-2021',
-    '06-19-2021',
-    '07-03-2021'
+    '01-16',
+    '01-30',
+    '02-13',
+    '02-27',
+    '03-13',
+    '03-27',
+    '04-10',
+    '04-24',
+    '05-08',
+    '05-22',
+    '06-05',
+    '06-19',
+    '07-03'
   ];
 
 
@@ -147,15 +147,15 @@ Interval = 14.4375
 
     var dataExtent = d3.extent(upstreamData, function(d) { return d.day; });
 
-    xScale = d3.scale.linear()
+    var xScale = d3.scale.linear()
           .domain(d3.extent(upstreamData, function(d) { return d.day; }))
           .range([0, width]);
 
-    yScale = d3.scale.linear()
+    var yScale = d3.scale.linear()
           .domain([0,60])
           .range([height, 0]);
 
-    xAxis = d3.svg.axis()
+    var xAxis = d3.svg.axis()
               .scale(xScale)
               .tickValues(upstreamData.map(function(item){
                 return item.day;
@@ -165,7 +165,7 @@ Interval = 14.4375
               })
               .orient("bottom");
 
-    yAxis = d3.svg.axis()
+    var yAxis = d3.svg.axis()
               .scale(yScale)
               .innerTickSize(-width)
               .outerTickSize(0)
@@ -174,7 +174,12 @@ Interval = 14.4375
               })
               .orient("left");
 
-    svg = d3.select(".chart").append("svg")
+        // Define the div for the tooltip
+    var tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+    var svg = d3.select(".chart").append("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")
         .attr("viewBox", viewBox)
       .append("g")
@@ -185,7 +190,7 @@ Interval = 14.4375
         .attr("transform", "translate(" + margin.left + "," + height + ")")
         .call(xAxis)
       .selectAll("text")
-        .attr("dy", "12")
+        .attr("dy", "4")
         .attr("dx", "-7")
         .attr("transform", "rotate(-45)")
         .style("text-anchor", "end");
@@ -227,7 +232,19 @@ Interval = 14.4375
             .attr("cx", function(d) { return xScale(d.day) + margin.left; })
             .attr("cy", function(d) { return yScale(d.growth); })
             .attr("r", 4)
-            .attr("fill", "#8c489a");
+            .on("mouseover", function(d, i) {
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltip.html('<div class="tooltip-date">' + dataLabels[i] + '</div><div class="tooltip-growth">'  + d.growth + '%</div>')
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(d) {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
 
         svg.selectAll(".dot-downstream")
           .data(downstreamData)  // This is the nested data call
@@ -237,7 +254,19 @@ Interval = 14.4375
             .attr("cx", function(d) { return xScale(d.day) + margin.left; })
             .attr("cy", function(d) { return yScale(d.growth); })
             .attr("r", 4)
-            .attr("fill", "#e12053");
+            .on("mouseover", function(d, i) {
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltip.html('<div class="tooltip-date">' + dataLabels[i] + '</div><div class="tooltip-growth">'  + d.growth + '%</div>')
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(d) {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
 
          //Select All of the lines and process them one by one
          d3.selectAll(".line").each(function(d,i) {
