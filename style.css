@@ -22,7 +22,7 @@
   stroke: none;
 }
 
-.network-chart {
+.network-chart-wrap {
   max-width: 1140px;
   margin: 50px auto;
   min-height: 200px;
@@ -62,4 +62,35 @@
 
 .tooltip-date {
   margin: 5px auto;
+}
+
+.key {
+  margin-left: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.key-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.key-item:first-child {
+  margin-right: 15px;
+}
+
+.key-color {
+  height: 15px;
+  width: 30px;
+  margin-right: 5px;
+}
+
+.key-color-upstream {
+  background: #8c489a;
+}
+
+.key-color-downstream {
+  background: #e12053;
 }

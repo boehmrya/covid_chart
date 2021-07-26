@@ -6,16 +6,25 @@
 <link rel="stylesheet" href="style.css">
 <body>
 
-<div class="network-chart"></div>
+
+<div class="network-chart-wrap">
+  <div class="key">
+    <div class="key-item key-item-upstream">
+      <div class="key-color key-color-upstream"></div>
+      <div class="key-label">Upstream</div>
+    </div>
+
+    <div class="key-item">
+      <div class="key-color key-color-downstream"></div>
+      <div class="key-label">Downstream</div>
+    </div>
+  </div>
+  <div class="network-chart"></div>
+</div>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/d3.v3.min.js"></script>
 <script src="js/script.js"></script>
 
-<script>
-$(window).on("load", function () {
-  alert("Document Ready");
-});
-</script>
 </body>
 </html>
