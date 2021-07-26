@@ -98,39 +98,39 @@ var downstreamData = [
 
 var dataLabels = [
   '3/1/20',
-  '3/28',
-  '4/11',
-  '4/25',
-  '5/9',
-  '5/23',
-  '6/6',
-  '6/20',
-  '7/4',
-  '7/18',
-  '8/8',
-  '8/22',
-  '9/12',
-  '9/26',
-  '10/10',
-  '10/24',
-  '11/7',
-  '11/21',
-  '12/5',
-  '12/19',
+  '3/28/20',
+  '4/11/20',
+  '4/25/20',
+  '5/9/20',
+  '5/23/20',
+  '6/6/20',
+  '6/20/20',
+  '7/4/20',
+  '7/18/20',
+  '8/8/20',
+  '8/22/20',
+  '9/12/20',
+  '9/26/20',
+  '10/10/20',
+  '10/24/20',
+  '11/7/20',
+  '11/21/20',
+  '12/5/20',
+  '12/19/20',
   '1/2/21',
-  '1/16',
-  '1/30',
-  '2/13',
-  '2/27',
-  '3/13',
-  '3/27',
-  '4/10',
-  '4/24',
-  '5/8',
-  '5/22',
-  '6/5',
-  '6/19',
-  '7/3'
+  '1/16/21',
+  '1/30/21',
+  '2/13/21',
+  '2/27/21',
+  '3/13/21',
+  '3/27/21',
+  '4/10/21',
+  '4/24/21',
+  '5/8/21',
+  '5/22/21',
+  '6/5/21',
+  '6/19/21',
+  '7/3/21'
 ];
 
 
@@ -138,7 +138,7 @@ function initNetworkChart() {
   // dimensions
   var outerWidth = 1140;
   var outerHeight = 500;
-  var margin = {top: 20, right: 30, bottom: 60, left: 20};
+  var margin = {top: 20, right: 50, bottom: 60, left: 10};
   var width = outerWidth - margin.left - margin.right;
   var height = outerHeight - margin.top - margin.bottom;
   var viewBox = "0 0 " + outerWidth + " " + outerHeight;
@@ -188,10 +188,10 @@ function initNetworkChart() {
       .attr("transform", "translate(" + margin.left + "," + height + ")")
       .call(xAxis)
     .selectAll("text")
-      .attr("dy", "4")
-      .attr("dx", "-7")
-      .attr("transform", "rotate(-45)")
-      .style("text-anchor", "end");
+      .attr("dy", "0")
+      .attr("dx", "10")
+      .attr("transform", "rotate(60)")
+      .style("text-anchor", "start");
 
   svg.append("g")
       .attr("class", "y axis")
