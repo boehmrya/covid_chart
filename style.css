@@ -22,9 +22,10 @@
   stroke: none;
 }
 
-.chart {
+.network-chart {
   max-width: 1140px;
   margin: 50px auto;
+  min-height: 200px;
 }
 
 .line,
